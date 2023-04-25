@@ -8,25 +8,38 @@ function getAll() {
 }
 
 function createEnviroment(label, category, priority) {
-    const arr = JSON.parse(fs.readFileSync(path))
+  const arr = JSON.parse(fs.readFileSync(path));
   arr.push({
     id: label.toLowerCase(),
     label: label,
     category: category,
     priority: priority,
-
   });
-  fs.writeFileSync(path, JSON.stringify(arr))
+  fs.writeFileSync(path, JSON.stringify(arr));
   return arr;
 }
 
 function deleteEnviroment(id) {
-    const arr = JSON.parse(fs.readFileSync(path))
-const filtered = arr.filter((elem) => elem.id != id)
+  const arr = JSON.parse(fs.readFileSync(path));
+  const filtered = arr.filter((elem) => elem.id != id);
 
-  
-  fs.writeFileSync(path, JSON.stringify(filtered))
+  fs.writeFileSync(path, JSON.stringify(filtered));
   return filtered;
 }
 
-module.exports = { getAll, createEnviroment, deleteEnviroment };
+function putEnviroment(id, label, category, priority) {
+  const arr = JSON.parse(fs.readFileSync(path));
+  const filtered = arr.filter((elem) => elem.id != id);
+  if (filtered.length != arr.length) {
+    filtered.push({
+      id: label.toLowerCase(),
+      label: label,
+      category: category,
+      priority: priority,
+    });
+  }
+  fs.writeFileSync(path, JSON.stringify(filtered));
+  return filtered;
+}
+
+module.exports = { getAll, createEnviroment, deleteEnviroment, putEnviroment };

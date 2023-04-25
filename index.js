@@ -1,9 +1,14 @@
 const express = require("express");
-const { getAll, createEnviroment, deleteEnviroment} = require(`./service/service.js`);
+const {
+  getAll,
+  createEnviroment,
+  deleteEnviroment,
+  putEnviroment,
+} = require(`./service/service.js`);
 const bodyParser = require(`body-parser`);
 
 const app = express();
-app.use (bodyParser.json())
+app.use(bodyParser.json());
 app.get(`/`, function (req, res) {
   try {
     const data = getAll();
@@ -25,8 +30,19 @@ app.post(`/`, function (req, res) {
 
 app.delete(`/:id`, function (req, res) {
   try {
-    const {id } = req.params;
+    const { id } = req.params;
     const data = deleteEnviroment(id);
+    res.send(data);
+  } catch (error) {
+    res.send(error.message);
+  }
+});
+
+app.put(`/:id`, function (req, res) {
+  try {
+    const { id } = req.params;
+    const { label, category, priority } = req.body;
+    const data = putEnviroment(id, label, category, priority);
     res.send(data);
   } catch (error) {
     res.send(error.message);
