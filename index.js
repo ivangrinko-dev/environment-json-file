@@ -28,21 +28,21 @@ app.post(`/`, function (req, res) {
   }
 });
 
-app.put(`/:id`, function (req, res) {
+app.delete(`/:id`, function (req, res) {
   try {
     const { id } = req.params;
-    const { label, category, priority } = req.body;
-    const data = putEnviroment(id, label, category, priority);
+    const data = deleteEnviroment(id);
     res.send(data);
   } catch (error) {
     res.send(error.message);
   }
 });
 
-app.delete(`/:id`, function (req, res) {
+app.put(`/:id`, function (req, res) {
   try {
     const { id } = req.params;
-    const data = deleteEnviroment(id);
+    const { label, category, priority } = req.body;
+    const data = putEnviroment(id, label, category, priority);
     res.send(data);
   } catch (error) {
     res.send(error.message);
